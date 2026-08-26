@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="FB_System" Id="{1c27596d-b058-415e-82d3-a9b2f7d6bda9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_System
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbTcpTest    : FB_TcpClient;
+    bStartTest   : BOOL;
+    arrDataRx    : ARRAY[0..255] OF BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Kích hoạt kết nối thử nghiệm
+IF bStartTest THEN
+    fbTcpTest.M_Connect(sIP_Address := '192.168.1.190', nPort := 6000);
+    bStartTest := FALSE;
+END_IF
+
+// Gọi trái tim động cơ chạy liên tục
+fbTcpTest.M_Cyclic();
+
+// Hứng dữ liệu test
+IF fbTcpTest.P_HasNewData THEN
+    fbTcpTest.M_GetData(pDest := ADR(arrDataRx), nSize := SIZEOF(arrDataRx));
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_System">
+      <LineId Id="13" Count="11" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
