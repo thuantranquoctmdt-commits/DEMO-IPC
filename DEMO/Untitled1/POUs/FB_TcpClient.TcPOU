@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <POU Name="FB_TcpClient" Id="{0499ef87-5436-45e5-809a-d9b15017e94d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TcpClient IMPLEMENTS I_TcpClient
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbConnect    : FB_SocketConnect;
+    fbReceive    : FB_SocketReceive;
+    hSocket      : T_HSOCKET;
+    nState       : INT := 0;
+    
+    // Vùng nhớ đệm mạng
+    arrBuffer    : ARRAY[0..255] OF BYTE;
+    bDataReady   : BOOL := FALSE;
+    
+    // Biến lưu IP và Port từ Method truyền vào
+    sTargetIP    : STRING;
+    nTargetPort  : UINT;
+    bCmdConnect  : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="M_Connect" Id="{bad03c59-13d8-4e8f-b38a-2ccad48128f5}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD M_Connect
+VAR_INPUT
+	sIP_Address	: STRING;
+	nPort	: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sTargetIP := sIP_Address;
+nTargetPort := nPort;
+bCmdConnect := TRUE; // Bóp cò để M_Cyclic bắt đầu chạy]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_Cyclic" Id="{c5d5b43a-00da-41c3-a07f-3125d3b2eeb6}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD M_Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Gọi các khối hàm hệ thống ở đầu Method
+fbConnect();
+fbReceive();
+
+CASE nState OF
+    0: // CHỜ KẾT NỐI
+        IF bCmdConnect THEN
+            bCmdConnect := FALSE;
+            nState := 10;
+        END_IF
+
+    10: // GỌI HÀM KẾT NỐI (Logic y hệt như cũ)
+        fbConnect.sRemoteHost := sTargetIP;
+        fbConnect.nRemotePort := nTargetPort;
+        fbConnect.bExecute := TRUE;
+        // ... (các đoạn check bBusy, bError giữ nguyên)
+
+    20: // LẮNG NGHE DỮ LIỆU
+        fbReceive.hSocket := hSocket;
+        fbReceive.cbLen := SIZEOF(arrBuffer);
+        fbReceive.pDest := ADR(arrBuffer);
+        fbReceive.bExecute := TRUE;
+        // ... (check nRecBytes > 0 rồi bật cờ bDataReady)
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_GetData" Id="{594b4c60-18e7-416e-96c1-0beaa64c1dc0}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD M_GetData : BOOL;
+VAR_INPUT
+	pDest	: POINTER TO BYTE;
+	nSize	: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bDataReady THEN
+    MEMCPY(destAddr := pDest, srcAddr := ADR(arrBuffer), n := nSize);
+    bDataReady := FALSE; // Reset cờ sau khi đã lấy xong
+    M_GetData := TRUE;
+ELSE
+    M_GetData := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="P_HasNewData" Id="{af66b793-ccae-4d7a-9e7d-810f71651848}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY P_HasNewData : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{8b6beffc-8c4a-4acb-9aa6-5433c74fa5b6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[P_HasNewData := bDataReady;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_TcpClient">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TcpClient.M_Connect">
+      <LineId Id="9" Count="1" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TcpClient.M_Cyclic">
+      <LineId Id="5" Count="22" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TcpClient.M_GetData">
+      <LineId Id="9" Count="5" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TcpClient.P_HasNewData.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

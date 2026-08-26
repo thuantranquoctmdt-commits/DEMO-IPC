@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
-  <POU Name="MAIN" Id="{487ac2db-d967-499e-ac9e-fd5c6a60eb36}" SpecialFunc="None">
+  <POU Name="MAIN" Id="{df3f6be4-87c9-4c81-9aa5-3c217e2e5fbf}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	Hethong : FB_System;
+	fbRFID_Reader  : FB_RRU7001;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Hethong();]]></ST>
+      <ST><![CDATA[fbRFID_Reader();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="2" Count="0" />
