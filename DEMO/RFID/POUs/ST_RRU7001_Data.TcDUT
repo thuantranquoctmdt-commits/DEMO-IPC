@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <DUT Name="ST_RRU7001_Data" Id="{743a63ef-3ad4-4b3b-b6c3-4c55268a9b0e}">
+    <Declaration><![CDATA[TYPE ST_RRU7001_Data :
+STRUCT
+	nHeader : BYTE;
+    nLength : BYTE;
+    arrUID  : ARRAY[0..7] OF BYTE; // Cục dữ liệu lõi mã thẻ
+    arrCRC  : ARRAY[0..1] OF BYTE;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
