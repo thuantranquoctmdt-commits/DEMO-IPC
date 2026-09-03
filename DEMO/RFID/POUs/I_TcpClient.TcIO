@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
+  <Itf Name="I_TcpClient" Id="{96b47f59-8b05-4a95-ac7f-71e9d8a39dab}">
+    <Declaration><![CDATA[INTERFACE I_TcpClient
+]]></Declaration>
+    <Method Name="M_Connect" Id="{89b798ef-f26f-46a9-a705-2af8a340cdba}">
+      <Declaration><![CDATA[METHOD M_Connect
+VAR_INPUT
+	sIP   : STRING;
+    nPort : UINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="M_Cyclic" Id="{f20db6c8-71b5-47e8-b6cd-85de38bb154d}">
+      <Declaration><![CDATA[METHOD M_Cyclic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="M_GetData" Id="{1e9d0886-8af9-4a37-b9c2-94d3609b3293}">
+      <Declaration><![CDATA[METHOD M_GetData : UDINT;
+VAR_INPUT
+	pDest : POINTER TO BYTE;
+    nSize : UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="P_HasNewData" Id="{26638b89-eed0-4d00-b49e-9837d211b0be}">
+      <Declaration><![CDATA[PROPERTY P_HasNewData : bool]]></Declaration>
+      <Get Name="Get" Id="{74657d1f-5bc6-4285-8354-30e8631811e6}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

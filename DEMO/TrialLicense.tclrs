@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
 	<LicenseInfo>
-		<SystemId>{56D1831D-95DE-E9A8-7353-C35761C9E06D}</SystemId>
-		<IssueTime>2026-08-26T07:51:00</IssueTime>
-		<ExpireTime>2026-09-03T00:00:00</ExpireTime>
-		<LicenseKey>473f1a5dd4660a7a80b3fd9fc772166470ac78cb041c46cee86350ac7ac835cf26eae095a71d014273f1c3ca507d933fc5e66e3481b0d68516baa259ad0b610d5915eaf185a138803ed6c14e5f174ad5f97f93b17f5d552b5e87c3abdfe6069729635909fa095ee97fbaf5efad13abead99cb131d03eb7d030334a297acdd55e5f7056477232cea5c769fa24efbed19733a46fec2b36df27d26f4ccdf71db2ce2b24d3c4d4784868335c566af8f6a0c8744139dcddcb6fdbf4d7753a113cf09c70179da25ec67161bfa595529cde38fb8d85a5a1aa9a474ef5a74b7cd7f71227eb0dba773a7f2ab2790c6f2f9cae8a423645faa19081519b2f84c2e7459546c2</LicenseKey>
+		<SystemId>{1255847E-F7DC-125B-A24F-AFCB5932A91C}</SystemId>
+		<IssueTime>2026-09-03T07:26:00</IssueTime>
+		<ExpireTime>2026-09-11T00:00:00</ExpireTime>
+		<LicenseKey>219386727e0003e270b6672c3eff1bb91c95b095713ff4b2acc64dd172373d75660517c6f8ca260247a7092d01c5d0334b8721de3e69a73dc11646a7f520976d4e57f40803380ad814f79264e7ef9b25203ee3d98a29977aae8e17f7406d25b30fc131295f3df680126356dabc2dd0abef8cb3ec44ff2def8751ff24dee378cd2491c00d8d3780f9a9bd9abb20310cde222e7e9d6fe2a6a2e7baa8729e04c30539bdc4241eb20ec12fcc4b2a4d38a205fefda8acce3b089a87532268344adb1fe259a78606c6d90f58719b1155011077939940b7db2ce51ca95d13f4b68622e2705024a3a6ea75023fcef6a7eea69c5ce087f9f49d352beacb0238cf74971d9b</LicenseKey>
 		<License>
 			<LicenseId>{4C256767-E6E6-4AF5-BD68-9F7ABAD0C200}</LicenseId>
 			<Name>TC3 ADS</Name>
@@ -19,6 +19,11 @@
 			<LicenseId>{66689887-CCBD-452C-AC9A-039D997C6E66}</LicenseId>
 			<Name>TC3 PLC</Name>
 			<OrderNo>TC1200</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{3EBB9639-5FF3-42B6-8847-35C70DC013C8}</LicenseId>
+			<Name>TC3 TCP/IP</Name>
+			<OrderNo>TF6310</OrderNo>
 		</License>
 	</LicenseInfo>
 </TcLicenseInfo>

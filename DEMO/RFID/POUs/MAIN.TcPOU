@@ -3,14 +3,14 @@
   <POU Name="MAIN" Id="{df3f6be4-87c9-4c81-9aa5-3c217e2e5fbf}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	fbRFID_Reader  : FB_RRU7001;
+	fbReader : FB_RRU7001;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbRFID_Reader();]]></ST>
+      <ST><![CDATA[fbReader();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="2" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

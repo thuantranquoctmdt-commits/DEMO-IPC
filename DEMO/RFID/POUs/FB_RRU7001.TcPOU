@@ -2,38 +2,42 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.16">
   <POU Name="FB_RRU7001" Id="{76b6b341-bba7-4c91-a46d-1b0c622a711e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_RRU7001
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
-	fbNetwork       : FB_TcpClient; // Lắp động cơ mạng vào
-    stTagData       : ST_RRU7001_Data; // Đem khuôn đúc ra hứng
+    fbNetwork       : FB_TcpClient;
+    arrRawData      : ARRAY[0..255] OF BYTE;
+    nRecBytes       : UDINT;
     
     bInit           : BOOL := TRUE;
-    bCardDetected   : BOOL;
-END_VAR
-]]></Declaration>
+    i               : INT;
+    sUID            : STRING(100); 
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// 1. CHẠY KHỞI TẠO 1 LẦN DUY NHẤT
-IF bInit THEN
-    fbNetwork.M_Connect(sIP_Address := '192.168.1.200', nPort := 20000); 
+      <ST><![CDATA[IF bInit THEN
+    fbNetwork.M_Connect(sIP := '192.168.1.190', nPort := 6000); 
     bInit := FALSE;
 END_IF
 
-// 2. DUY TRÌ NHỊP ĐẬP CHO MẠNG TCP/IP (Gọi liên tục mỗi chu kỳ)
 fbNetwork.M_Cyclic();
 
-// 3. XỬ LÝ LOGIC QUÉT THẺ
 IF fbNetwork.P_HasNewData THEN
-    // Ép kiểu bằng MEMCPY
-    fbNetwork.M_GetData(pDest := ADR(stTagData), nSize := SIZEOF(stTagData));
-    
-    bCardDetected := TRUE;
+    nRecBytes := fbNetwork.M_GetData(pDest := ADR(arrRawData), nSize := SIZEOF(arrRawData));
+
+    IF nRecBytes > 0 THEN
+        sUID := '';
+        FOR i := 6 TO 17 DO
+            sUID := CONCAT(sUID, BYTE_TO_HEXSTR(in := arrRawData[i], iPrecision := 2, bLoCase := FALSE));
+            IF i < 17 THEN 
+                sUID := CONCAT(sUID, ' '); 
+            END_IF
+        END_FOR
+    END_IF
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_RRU7001">
-      <LineId Id="15" Count="14" />
+      <LineId Id="52" Count="3" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="60" Count="2" />
+      <LineId Id="64" Count="9" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
